@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.awt.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.util.ArrayList;
@@ -33,6 +35,13 @@ public class GamePanel extends JPanel implements ActionListener {
     GamePanel() {
         random = new Random();
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+
+        
+        ImageIcon icon = new ImageIcon("space_bg.png");
+        JLabel bg = new JLabel(icon);
+        bg.setBounds(0,0,600,600);
+        this.add(bg);
+
         this.setBackground(Color.BLACK); // change to a picture of space?
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
@@ -171,7 +180,7 @@ public class GamePanel extends JPanel implements ActionListener {
         showHighscore.setBackground(Color.BLACK);
         showHighscore.setForeground(Color.RED);
         showHighscore.setFont(new Font("Ink Free", Font.BOLD, 18));
-        showHighscore.setBounds(150, 350, 100, 50);
+        showHighscore.setBounds(150, 350, 200, 50);
         this.add(showHighscore);
         showHighscore.addActionListener(new ActionListener(){
             @Override
@@ -184,19 +193,21 @@ public class GamePanel extends JPanel implements ActionListener {
                 panel.setBackground(Color.BLACK);
                 highscoreDialog.add(panel);
 
-                ArrayList<String> names = new ArrayList<String>();
-                try {
-                    FileReader reader = new FileReader("src/Name.txt");
-                    BufferedReader bufferedReader = new BufferedReader(reader);
-                    String fileRow;
-                    while((fileRow=bufferedReader.readLine())!=null){
-                        names.add(fileRow);
-                        System.out.println(names);
-                    }
+                // ArrayList<String> names = new ArrayList<String>();
+                // try {
+                //     FileReader reader = new FileReader("src/Name.txt");
+                //     BufferedReader bufferedReader = new BufferedReader(reader);
+                //     String fileRow;
+                //     while((fileRow=bufferedReader.readLine())!=null){
+                //         names.add(fileRow);
+                //         JLabel name = new JLabel();
+                //         name.setSize(200, 30);
+                //         name.setText(names<0>);
+                //     }
 
-                } catch (Exception e2) {
-                    //TODO: handle exception
-                }
+                // } catch (Exception e2) {
+                //     //TODO: handle exception
+                // }
 
                 JLabel highscoreLabel = new JLabel("Highscore");
 
@@ -205,7 +216,21 @@ public class GamePanel extends JPanel implements ActionListener {
                 highscoreLabel.setForeground(Color.RED);
                 panel.add(highscoreLabel);
 
-                //File
+                try {
+                        FileReader reader = new FileReader("src/Name.txt");
+                        BufferedReader bufferedReader = new BufferedReader(reader);
+                        String fileRow;
+                        while((fileRow=bufferedReader.readLine())!=null){
+                            
+                            JLabel name = new JLabel(fileRow+" "+applesEaten);
+                            name.setSize(200, 30);
+                            name.setForeground(Color.WHITE);
+                            panel.add(name);
+                        }
+    
+                    } catch (Exception e2) {
+                        //TODO: handle exception
+                    }
                 
 
                 highscoreDialog.setLayout(null);
