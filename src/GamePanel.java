@@ -28,6 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
         this.setBackground(Color.BLACK); // change to a picture of space?
         this.setFocusable(true);
         this.addKeyListener(new MyKeyAdapter());
+        showName();
         startGame();
     }
 
@@ -164,9 +165,32 @@ public class GamePanel extends JPanel implements ActionListener {
         showHighscore.setFont(new Font("Ink Free", Font.BOLD, 18));
         showHighscore.setBounds(150, 350, 100, 50);
         this.add(showHighscore);
+        showHighscore.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                JDialog highscoreDialog = new JDialog();
 
+                JPanel panel = new JPanel();
+                panel.setBounds(0,0,600,600);
+                panel.setLayout(null);
+                panel.setBackground(Color.BLACK);
+                highscoreDialog.add(panel);
 
-        
+                JLabel highscoreLabel = new JLabel("Highscore");
+
+                highscoreLabel.setBounds(250, 20, 200, 40);
+                highscoreLabel.setFont(new Font("Ink Free", Font.BOLD, 30));
+                highscoreLabel.setForeground(Color.RED);
+                panel.add(highscoreLabel);
+                
+
+                highscoreDialog.setLayout(null);
+                highscoreDialog.setSize(600, 600);
+                highscoreDialog.setVisible(true);
+            }
+        }); 
+
+    
 
         // restart.addActionListener(new ActionListener(){
         //     @Override
@@ -177,36 +201,64 @@ public class GamePanel extends JPanel implements ActionListener {
 
     }
 
-    public void restartGame(Button restart){
+    // public void restartGame(Button restart){
        
-        restart.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                GamePanel restartbtn = new GamePanel();
-                this.remove(this);
-                bodyParts = 6;
-                applesEaten = 0;
-                running = false;
-                timer = new Timer(DELAY, this);
-                startGame();
-            }
-        }); 
-    }
+    //     restart.addActionListener(new ActionListener(){
+    //         @Override
+    //         public void actionPerformed(ActionEvent e){
+    //             GamePanel restartbtn = new GamePanel();
+    //             this.remove(this);
+    //             bodyParts = 6;
+    //             applesEaten = 0;
+    //             running = false;
+    //             timer = new Timer(DELAY, this);
+    //             startGame();
+    //         }
+    //     }); 
+    // }
 
-    public void showHighscore(){
+    // public void showHighscore(){
        
-        restart.addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                GamePanel restartbtn = new GamePanel();
-                this.remove(this);
-                bodyParts = 6;
-                applesEaten = 0;
-                running = false;
-                timer = new Timer(DELAY, this);
-                startGame();
-            }
-        }); 
+    //     restart.addActionListener(new ActionListener(){
+    //         @Override
+    //         public void actionPerformed(ActionEvent e){
+    //             GamePanel restartbtn = new GamePanel();
+    //             this.remove(this);
+    //             bodyParts = 6;
+    //             applesEaten = 0;
+    //             running = false;
+    //             timer = new Timer(DELAY, this);
+    //             startGame();
+    //         }
+    //     }); 
+    // }
+
+    public void showName(){
+        boolean visib = true;
+        JDialog name = new JDialog();
+
+        JPanel panel = new JPanel();
+        panel.setBounds(0, 0, 600, 600);
+        panel.setBackground(Color.BLACK);
+        name.add(panel);
+
+        JLabel input = new JLabel("Input name");
+        input.setForeground(Color.RED);
+        input.setFont(new Font("Ink Free", Font.BOLD, 35));
+        input.setBounds(250, 20, 200, 40);
+        panel.add(input);
+
+        JTextField inname = new JTextField();
+        inname.setBounds(250, 60, 200, 40);
+        panel.add(inname);
+
+        JButton send = new JButton("Confirm");
+        send.setBounds(250, 80, 200, 40);
+        panel.add(send);
+
+        name.setSize(600,600);
+        name.setLayout(null);
+        name.setVisible(visib);
     }
 
     @Override
@@ -218,6 +270,8 @@ public class GamePanel extends JPanel implements ActionListener {
         }
         repaint();
     }
+
+    
 
     public class MyKeyAdapter extends KeyAdapter {
         @Override
