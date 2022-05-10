@@ -211,7 +211,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
                 JLabel highscoreLabel = new JLabel("Highscore");
 
-                highscoreLabel.setBounds(250, 20, 200, 40);
+                highscoreLabel.setBounds(275, 20, 200, 40);
                 highscoreLabel.setFont(new Font("Ink Free", Font.BOLD, 30));
                 highscoreLabel.setForeground(Color.RED);
                 panel.add(highscoreLabel);
@@ -222,9 +222,11 @@ public class GamePanel extends JPanel implements ActionListener {
                         String fileRow;
                         while((fileRow=bufferedReader.readLine())!=null){
                             
-                            JLabel name = new JLabel(fileRow+" "+applesEaten);
-                            name.setSize(200, 30);
+                            JLabel name = new JLabel(fileRow);
+                            name.setBounds(0,20,200,30);
+                            // name.setSize(200, 30);
                             name.setForeground(Color.WHITE);
+                            name.setFont(new Font("Ink Free", Font.BOLD, 20));
                             panel.add(name);
                         }
     
@@ -314,11 +316,13 @@ public class GamePanel extends JPanel implements ActionListener {
             @Override
             public void actionPerformed(ActionEvent e){
                 try {
-                    String playerName = inname.getText();
-                    FileWriter file = new FileWriter("src/Name.txt");
-                    BufferedWriter writer = new BufferedWriter(file);
-                    writer.write(playerName);
-                    writer.close();
+                        String playerName = inname.getText();
+                        FileWriter file = new FileWriter("src/Name.txt");
+                        BufferedWriter writer = new BufferedWriter(file);
+                        writer.write(playerName+" "+applesEaten+"\n");
+                        writer.close();
+                    
+                    
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
