@@ -1,7 +1,15 @@
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.awt.*;
 import javax.swing.*;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class GamePanel extends JPanel implements ActionListener {
@@ -172,9 +180,23 @@ public class GamePanel extends JPanel implements ActionListener {
 
                 JPanel panel = new JPanel();
                 panel.setBounds(0,0,600,600);
-                panel.setLayout(null);
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                 panel.setBackground(Color.BLACK);
                 highscoreDialog.add(panel);
+
+                ArrayList<String> names = new ArrayList<String>();
+                try {
+                    FileReader reader = new FileReader("src/Name.txt");
+                    BufferedReader bufferedReader = new BufferedReader(reader);
+                    String fileRow;
+                    while((fileRow=bufferedReader.readLine())!=null){
+                        names.add(fileRow);
+                        System.out.println(names);
+                    }
+
+                } catch (Exception e2) {
+                    //TODO: handle exception
+                }
 
                 JLabel highscoreLabel = new JLabel("Highscore");
 
@@ -182,6 +204,8 @@ public class GamePanel extends JPanel implements ActionListener {
                 highscoreLabel.setFont(new Font("Ink Free", Font.BOLD, 30));
                 highscoreLabel.setForeground(Color.RED);
                 panel.add(highscoreLabel);
+
+                //File
                 
 
                 highscoreDialog.setLayout(null);
@@ -239,6 +263,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
         JPanel panel = new JPanel();
         panel.setBounds(0, 0, 600, 600);
+        panel.setLayout(null);
         panel.setBackground(Color.BLACK);
         name.add(panel);
 
@@ -248,13 +273,32 @@ public class GamePanel extends JPanel implements ActionListener {
         input.setBounds(250, 20, 200, 40);
         panel.add(input);
 
+        
+
         JTextField inname = new JTextField();
-        inname.setBounds(250, 60, 200, 40);
+        inname.setBounds(250, 160, 200, 40);
         panel.add(inname);
+
+        
 
         JButton send = new JButton("Confirm");
         send.setBounds(250, 80, 200, 40);
         panel.add(send);
+
+        send.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                try {
+                    String playerName = inname.getText();
+                    FileWriter file = new FileWriter("src/Name.txt");
+                    BufferedWriter writer = new BufferedWriter(file);
+                    writer.write(playerName);
+                    writer.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
         name.setSize(600,600);
         name.setLayout(null);
