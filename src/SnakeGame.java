@@ -13,6 +13,5 @@ public class SnakeGame {
         //shortcut to not write GameFrame gameFrame = new...
         new GameFrame();
         
-        
     }
 }
